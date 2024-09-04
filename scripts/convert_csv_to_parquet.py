@@ -3,8 +3,8 @@ import pandas as pd
 
 #Asegurate de tener instaladas las librerias necesarias de requirements.txt.
 def convert_csv_to_parquet(
-    csv_file: str,
-    parquet_file: str,
+    csv_path: str,
+    parquet_path: str,
     columns_to_drop: list = None,
     dtype_conversion: dict = None,
     fillna_values: dict = None
@@ -14,9 +14,9 @@ def convert_csv_to_parquet(
 
     Parameters:
     -----------
-    csv_file : str
+    csv_path : str
         Ruta del archivo CSV.
-    parquet_file : str
+    parquet_path : str
         Ruta donde se guarda el parquet.
     columns_to_drop : list, opcional
         Lista de las columnas que se eliminaran del dataset antes de transformarlo.
@@ -30,7 +30,7 @@ def convert_csv_to_parquet(
     None
     '''
     
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(csv_path)
     
     
     if columns_to_drop is not None:
@@ -51,9 +51,7 @@ def convert_csv_to_parquet(
                     # Handle cases where dtype is not valid
                     print(f"Error: Tipo '{dtype}' no es valido para la columna '{column}'.")
       
-        
-    df.to_parquet(parquet_file, engine='pyarrow', compression='snappy', index=False)
-
+    df.to_parquet(parquet_path, engine='pyarrow', compression='snappy', index=False)
 
 
 
