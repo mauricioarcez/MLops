@@ -2,7 +2,7 @@ import pandas as pd
 
 
 #Asegurate de tener instaladas las librerias necesarias de requirements.txt.
-def convert_csv_to_parquet(
+def convertir_csv_a_parquet(
     csv_path: str,
     parquet_path: str,
     columns_to_drop: list = None,
@@ -32,13 +32,16 @@ def convert_csv_to_parquet(
     
     df = pd.read_csv(csv_path)
     
-    
+    # Eliminar columnas si se especifica
     if columns_to_drop is not None:
         df = df.drop(columns=columns_to_drop)
     
+    
+    # Rellenar valores nulos si se especifica
     if fillna_values:
         df.fillna(value=fillna_values, inplace=True)
         
+    # Convertir tipos de datos si se especifica
     if dtype_conversion is not None:
         for column, dtype in dtype_conversion.items():
             if column in df.columns:
@@ -50,20 +53,7 @@ def convert_csv_to_parquet(
                 except TypeError:
                     # Handle cases where dtype is not valid
                     print(f"Error: Tipo '{dtype}' no es valido para la columna '{column}'.")
-      
+    
+    
+    # Guardar como Parquet  
     df.to_parquet(parquet_path, engine='pyarrow', compression='snappy', index=False)
-
-
-
-convert_csv_to_parquet(
-    r'C:\Users\mauri\OneDrive\Escritorio\MLops\data\raw\movies_dataset.csv',
-    r'C:\Users\mauri\OneDrive\Escritorio\MLops\data\raw\movies_dataset.parquet',
-    columns_to_drop=['video','imdb_id','adult','original_title','poster_path','homepage'],
-    fillna_values={'revenue': 0, 'budget': 0},
-    dtype_conversion={'popularity': 'float64', 'budget':'int64','id':'int64'}
-)
-
-convert_csv_to_parquet(
-    r'C:\Users\mauri\OneDrive\Escritorio\MLops\data\raw\credits.csv',
-    r'C:\Users\mauri\OneDrive\Escritorio\MLops\data\raw\credits.parquet'
-)
