@@ -3,8 +3,14 @@ import pandas as pd
 
 app = FastAPI()
 
-# Cargamos el Dataframe procesado luego del etl.
-df = pd.read_parquet('data/processed/movies_dataset_etl.parquet')
+
+# Cargamos el Dataframe movies procesado luego del etl.
+df = pd.read_parquet('data/processed/movies/movies_dataset_etl.parquet')
+
+# Cargamos el Dataframe credits procesado luego del etl.
+df_cast = pd.read_parquet('data/processed/credits/cast_desanidado.parquet')
+df_crew = pd.read_parquet('data/processed/credits/crew_desanidado.parquet')
+
 
 # Diccionario para mapear meses en español a números
 meses = {

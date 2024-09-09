@@ -1,7 +1,7 @@
 import pandas as pd
 from pandas import DataFrame
 
-def desanidar_columnas(df:DataFrame,
+def desanidar_columna(df:DataFrame,
                        columna:str,
                        nombre_nueva_tabla: str,
                        indice_increment:int=0) -> DataFrame:
