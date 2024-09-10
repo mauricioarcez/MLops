@@ -164,12 +164,25 @@ async def votos_titulo(titulo: str) -> dict:
 @app.get('/obtener_actor/{actor}')
 async def get_actor(actor: str) -> dict:
     '''
-    Se ingresa el nombre de un actor que se encuentre dentro de un dataset debiendo devolver el éxito del mismo medido a través del retorno.
-    Además, la cantidad de películas que en las que ha participado y el promedio de retorno. La definición no deberá considerar directores.
-    Ejemplo de retorno: 
-    El actor X ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación
+    Muestra la cantidad de peliculas en las que participo el actor y las ganancias totales generadas  
+    por las peliculas que participo, con su promedio de retorno total. La funcion no considera directores.
+    
+    Parameters:
+    -----------
+    actor (str):
+        El nombre y apellido real del actor a verificar.
+        
+    Returns:
+    ---------
+    JSON message (dict): 
+        El actor X ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación
     '''
     # Para evitar problemas de capitalización. Verifica que el dataframe tambien este en minusculas. 
     actor = actor.lower()
+    # Filtra el dataset por el actor ingresado.
+    filtro_actor = df_cast[df_cast['name'] == actor]
+    # Cuenta sus peliculas con el id del dataframe original.
+    cantidad_peliculas = filtro_actor['id_df'].nunique()
     
-    return {"message": f"El actor {actor} ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación"} 
+    
+    return {"message": f"El actor {actor} ha participado de {cantidad_peliculas} cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación"} 

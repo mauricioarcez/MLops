@@ -48,7 +48,7 @@ def convertir_csv_a_parquet(
                 try:
                     df[column] = df[column].astype(dtype)
                 except ValueError:
-                    print(f"Warning: Conversion de columna '{column}' a '{dtype}' fallo. se intentara con pd.to_numeric.")
+                    print(f"Warning: Conversion de columna '{column}' a '{dtype}' fallo. Por posibles nulos. se intentara con pd.to_numeric.")
                     df[column] = pd.to_numeric(df[column], errors='coerce')
                 except TypeError:
                     # Handle cases where dtype is not valid
