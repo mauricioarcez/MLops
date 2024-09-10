@@ -175,14 +175,30 @@ async def get_actor(actor: str) -> dict:
     Returns:
     ---------
     JSON message (dict): 
-        El actor X ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación
+        El actor X ha participado de X filmaciones, el mismo ha conseguido un retorno de X veces la inversion. Con un promedio de X por filmación
     '''
     # Para evitar problemas de capitalización. Verifica que el dataframe tambien este en minusculas. 
     actor = actor.lower()
+    
     # Filtra el dataset por el actor ingresado.
     filtro_actor = df_cast[df_cast['name'] == actor]
+    
+    if filtro_actor.empty:
+        return {"message": f"El actor {actor} no se encontró en la base de datos."}
+    
     # Cuenta sus peliculas con el id del dataframe original.
     cantidad_peliculas = filtro_actor['id_df'].nunique()
     
+    # Array con los id de las peliculas .
+    array_peliculas = filtro_actor['id_df'].unique()
     
-    return {"message": f"El actor {actor} ha participado de {cantidad_peliculas} cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación"} 
+    # Coincidencias del actor con los id.
+    coincidencias = df[df['id'].isin(array_peliculas)]
+    
+    # Suma de retornos del actor.
+    retorno = round(coincidencias['return'].sum(),2)
+    # Promedio
+    promedio = round(coincidencias['return'].mean(),2)
+    
+    
+    return {"message": f"El actor {actor} ha participado de {cantidad_peliculas} filmaciones, el mismo ha conseguido un retorno de {retorno} veces la inversion. Con un promedio de {promedio} por filmación"} 
