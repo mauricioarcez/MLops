@@ -27,6 +27,12 @@ dias = {
 
 
 
+@app.get("/")
+async def root():
+    return {"message": "/docs/ para ver la api."}
+
+
+
 @app.get("/cantidad_filmaciones_mes/{mes}")
 async def cantidad_filmaciones_mes(mes: str) -> dict:
     '''
@@ -170,7 +176,7 @@ async def get_actor(actor: str) -> dict:
     Parameters:
     -----------
     actor (str):
-        El nombre y apellido real del actor a verificar.
+        Nombre y apellido real del actor a verificar.
         
     Returns:
     ---------
@@ -202,3 +208,25 @@ async def get_actor(actor: str) -> dict:
     
     
     return {"message": f"El actor {actor} ha participado de {cantidad_peliculas} filmaciones, el mismo ha conseguido un retorno de {retorno} veces la inversion. Con un promedio de {promedio} por filmación"} 
+
+
+
+@app.get('/obetener_director/{director}')
+async def get_director(director: str) -> dict:
+    '''
+    Se ingresa el nombre de un director que se encuentre dentro de un dataset debiendo devolver el éxito del mismo medido a través del retorno.
+    Además, deberá devolver el nombre de cada película con la fecha de lanzamiento, retorno individual, costo y ganancia de la misma
+    
+    Parameters:
+    --------
+    director (str): 
+        Nombre  y apellido real del director a verificar.
+        
+    Returns:
+    --------
+    
+    '''
+    # Para evitar problemas de capitalización. Verifica que el dataframe tambien este en minusculas. 
+    director = director.lower()
+    
+    return {"message": f"{director}"}
