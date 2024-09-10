@@ -61,7 +61,7 @@ async def cantidad_filmaciones_mes(mes: str) -> dict:
     # Contar cuántas películas fueron estrenadas en ese mes
     cantidad = df[df['release_date'].dt.month == numero_mes].shape[0]
     
-    return {"message": f"{cantidad} películas fueron estrenadas en los meses de {mes.capitalize()}"}
+    return {"cantidad": f"{cantidad} películas fueron estrenadas en los meses de {mes.capitalize()}"}
 
 
 
@@ -163,7 +163,9 @@ async def votos_titulo(titulo: str) -> dict:
     anio = pelicula['release_year'].values[0]
     promedio = pelicula['vote_average'].values[0]
 
-    return {"message": f"La película {titulo} fue estrenada en el año {anio}. La misma cuenta con un total de {votos} valoraciones, con un promedio de {promedio}"}
+    return {
+        "message": f"La película {titulo} fue estrenada en el año {anio}. La misma cuenta con un total de {votos} valoraciones, con un promedio de {promedio}"
+    }
 
 
 
@@ -186,7 +188,7 @@ async def get_actor(actor: str) -> dict:
     # Para evitar problemas de capitalización. Verifica que el dataframe tambien este en minusculas. 
     actor = actor.lower()
     
-    # Filtra el dataset por el actor ingresado.
+    # Filtra por el actor ingresado.
     filtro_actor = df_cast[df_cast['name'] == actor]
     
     if filtro_actor.empty:
@@ -207,26 +209,72 @@ async def get_actor(actor: str) -> dict:
     promedio = round(coincidencias['return'].mean(),2)
     
     
-    return {"message": f"El actor {actor} ha participado de {cantidad_peliculas} filmaciones, el mismo ha conseguido un retorno de {retorno} veces la inversion. Con un promedio de {promedio} por filmación"} 
+    return {
+        "message": f"El actor {actor} ha participado de {cantidad_peliculas} filmaciones, el mismo ha conseguido un retorno de {retorno} veces la inversion. Con un promedio de {promedio} por filmación"
+    } 
 
 
 
 @app.get('/obetener_director/{director}')
 async def get_director(director: str) -> dict:
     '''
-    Se ingresa el nombre de un director que se encuentre dentro de un dataset debiendo devolver el éxito del mismo medido a través del retorno.
-    Además, deberá devolver el nombre de cada película con la fecha de lanzamiento, retorno individual, costo y ganancia de la misma
+    Se ingresa el nombre de un director y muestra el éxito del mismo medido a través del retorno.
+    Además, muestra un listado de cada película con su fecha de lanzamiento, retorno individual, costo y ganancia de la misma.
     
     Parameters:
     --------
     director (str): 
-        Nombre  y apellido real del director a verificar.
+        Nombre  y apellido real del director a verificar. (ej: john lasseter)
         
     Returns:
     --------
-    
+    Json (dict): 
+        Un diccionario con su Nombre, Retorno de inversion, Listado de las peliculas dirigidas, Fecha de estreno de cada pelicula,
+        Retorno de inversion de cada pelicula, Costo de cada pelicula, ganancia de cadda pelicula. 
+
     '''
     # Para evitar problemas de capitalización. Verifica que el dataframe tambien este en minusculas. 
     director = director.lower()
     
-    return {"message": f"{director}"}
+    # Filtra por el director ingresado.
+    filtro_director = df_crew[df_crew['name'] == director]
+    
+    if filtro_director.empty:
+        return {"message": f"El director {director} no se encontró en la base de datos. Recuerda solo poner un cargo de Director."}
+    
+    # Array con los id de las peliculas.
+    array_peliculas = filtro_director['id_df'].unique()
+
+    # Coincidencias del director con movies_dataset a travez de su id.
+    coincidencias = df[df['id'].isin(array_peliculas)]
+    
+    # Suma de retornos del director.
+    retorno = round(coincidencias['return'].sum(),2)
+    
+    # Lista de cada pelicula del director
+    peliculas = [
+    {
+        "Titulo": row['title'],
+        "Fecha de estreno": row['release_year'],
+        "Costo": row['budget'],
+        "Ganancia": row['revenue'],
+        "Retorno": row['return']
+    }
+    for _, row in coincidencias.iterrows()  # coincidencias es el DataFrame filtrado de películas
+]
+    
+    return {
+        "Nombre": director,
+        "Retorno Total": retorno,
+        "Peliculas": peliculas
+}
+    
+    
+    
+@app.get('/recomendacion/')
+async def recomendacion(titulo: str) ->dict:
+    '''
+    Se ingresa el nombre de una película y te recomienda las similares en una lista de 5 valores.
+    '''
+    
+    return {"Recomendacion": titulo}
