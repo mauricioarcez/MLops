@@ -60,5 +60,22 @@ Para ejecutar este proyecto, asegúrate de tener instalado:
 
 La estructura del proyecto es la siguiente:
 
-tu_proyecto/ ├── app/ # Código principal de la aplicación │ └── main.py # Archivo principal para ejecutar la API ├── data/ # Datos del proyecto │ ├── raw/ # Datos en bruto (sin procesar) │ └── processed/ # Datos procesados listos para el análisis ├── notebooks/ # Notebooks Jupyter para análisis y pruebas │ ├── etl.movies.ipynb # Notebooks para la transformación de datos de películas │ ├── etl.credits.ipynb # Notebooks para la transformación de datos de créditos │ └── eda.ipynb # Notebooks para el análisis exploratorio de datos ├── scripts/ # Scripts de utilidades y funciones │ └── * # Otros scripts utilizados en el proyecto ├── requirements.txt # Archivo con las dependencias del proyecto ├── README.md # Este archivo └── .gitignore # Archivos y carpetas a ignorar por Git
+tu_proyecto/
+├── app/                      # Código principal de la aplicación.
+│   └── main.py               # Archivo principal para ejecutar la API.
+├── data/                     # Datasets del proyecto. Antes y despues de procesar.
+│   ├── raw/                  # Datos en bruto (sin procesar).
+│   └── processed/            # Datos procesados listos para ser consumidos por la API.
+├── notebooks/                # Notebooks Jupyter de los ETL, EDA, y pruebas del modelo.
+│   ├── etl.movies.ipynb      # Notebooks para la transformación del CSV de las peliculas.
+│   ├── etl.credits.ipynb     # Notebooks para la transformación del CSV de los creditos.
+│   └── eda.ipynb             # Notebooks para el análisis exploratorio de datos luego del ETL.
+│   └── model_test.ipynb      # Implementacion y pruebas del modelo luego del EDA.
+├── scripts/                  # Todas las funciones utilizadas en el proyecto.
+│   └── *                     # Funciones de desanidado, pre-procesamiento, conversion, etc.
+├── requirements.txt          # Archivo con las dependencias del proyecto.
+├── README.md                 # Este archivo con la documentacion del proyecto.
+└── .gitignore                # Archivos y carpetas a ignorar por Git.
+└── runtime.txt               # Especificacion de la version de Python.
+
 
