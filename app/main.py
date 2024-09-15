@@ -314,7 +314,7 @@ async def recomendacion(titulo: str) ->dict:
     sim_scores = cosine_similarity(matriz_reducida[idx].reshape(1, -1), matriz_reducida)
 
     # Obtén los puntajes de similitud para la película seleccionada
-    sim_scores = list(enumerate(sim_scores[idx]))
+    sim_scores = list(enumerate(sim_scores[0]))
     # Ordena las películas basadas en la similitud
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
