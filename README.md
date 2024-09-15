@@ -60,22 +60,16 @@ Para ejecutar este proyecto, asegúrate de tener instalado:
 
 La estructura del proyecto es la siguiente:
 
-tu_proyecto/
-├── app/                      # Código principal de la aplicación.
-│   └── main.py               # Archivo principal para ejecutar la API.
-├── data/                     # Datasets del proyecto. Antes y despues de procesar.
-│   ├── raw/                  # Datos en bruto (sin procesar).
-│   └── processed/            # Datos procesados listos para ser consumidos por la API.
-├── notebooks/                # Notebooks Jupyter de los ETL, EDA, y pruebas del modelo.
-│   ├── etl.movies.ipynb      # Notebooks para la transformación del CSV de las peliculas.
-│   ├── etl.credits.ipynb     # Notebooks para la transformación del CSV de los creditos.
-│   └── eda.ipynb             # Notebooks para el análisis exploratorio de datos luego del ETL.
-│   └── model_test.ipynb      # Implementacion y pruebas del modelo luego del EDA.
-├── scripts/                  # Todas las funciones utilizadas en el proyecto.
-│   └── *                     # Funciones de desanidado, pre-procesamiento, conversion, etc.
-├── requirements.txt          # Archivo con las dependencias del proyecto.
-├── README.md                 # Este archivo con la documentacion del proyecto.
-└── .gitignore                # Archivos y carpetas a ignorar por Git.
-└── runtime.txt               # Especificacion de la version de Python.
+app/: Contiene el archivo principal de la API con la lógica de recomendación.
+data/: Contiene los archivos de datos utilizados en el proyecto.
+    ├── raw/: Datos sin procesar.
+    ├── processed/: Datos procesados y utilizados en el modelo.
+notebooks/: Incluye los notebooks de Jupyter con el análisis exploratorio (EDA) y transformaciones.
+scripts/: Código fuente del proyecto, incluyendo scripts y funciones de transformación.
+    ├── convert_csv_to_parquet.py: Script para convertir archivos CSV a formato Parquet.
+    ├── etl.py: Script de ETL para transformar y limpiar datos.
+requirements.txt: Lista de dependencias y librerías necesarias para ejecutar el proyecto.
+README.md: Archivo de documentación del proyecto con instrucciones de uso y despliegue.
+
 
 
