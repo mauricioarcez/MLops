@@ -56,5 +56,9 @@ Para ejecutar este proyecto, asegúrate de tener instalado:
     pip install -r requirements.txt
     ```
 
+## Estructura del Proyecto
 
+La estructura del proyecto es la siguiente:
+
+tu_proyecto/ ├── app/ # Código principal de la aplicación │ └── main.py # Archivo principal para ejecutar la API ├── data/ # Datos del proyecto │ ├── raw/ # Datos en bruto (sin procesar) │ └── processed/ # Datos procesados listos para el análisis ├── notebooks/ # Notebooks Jupyter para análisis y pruebas │ ├── etl.movies.ipynb # Notebooks para la transformación de datos de películas │ ├── etl.credits.ipynb # Notebooks para la transformación de datos de créditos │ └── eda.ipynb # Notebooks para el análisis exploratorio de datos ├── scripts/ # Scripts de utilidades y funciones │ └── * # Otros scripts utilizados en el proyecto ├── requirements.txt # Archivo con las dependencias del proyecto ├── README.md # Este archivo └── .gitignore # Archivos y carpetas a ignorar por Git
 
