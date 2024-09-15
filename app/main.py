@@ -20,14 +20,12 @@ df_crew = pd.read_parquet('data/processed/credits/crew_desanidado.parquet')
 df_modelo = pd.read_parquet('data/processed/modelo_dataset.parquet')
 
 # Crear el vectorizador TF-IDF
-vectorizer = TfidfVectorizer(min_df=3, max_df=0.85,ngram_range=(1, 2), max_features=40000, dtype=np.float32) 
+vectorizer = TfidfVectorizer(min_df=5, max_df=0.85,ngram_range=(1, 2), max_features=30000, dtype=np.float32) 
 # Transformar la columna 'overview' en una matriz TF-IDF
 matriz = vectorizer.fit_transform(df_modelo['predictor'])
 # Reductir la dimensionalidad con SVD.
-svd = TruncatedSVD(n_components=600, random_state=42)
+svd = TruncatedSVD(n_components=300, random_state=42)
 matriz_reducida = svd.fit_transform(matriz)
-# Calcular la similitud del coseno
-cosine_sim = cosine_similarity(matriz_reducida, matriz_reducida)
 
 # Diccionario para mapear meses en español a números
 meses = {
@@ -309,16 +307,15 @@ async def recomendacion(titulo: str) ->dict:
         return {"Error": "Película no encontrada"}
     idx = idx[0]
     
-    # Obtén los puntajes de similitud para la película seleccionada
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    
-    # Ordena las películas basadas en la similitud
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    
+    # Calcula la similitud del coseno solo para la película seleccionada
+    sim_scores = cosine_similarity(matriz[idx], matriz).flatten()
+
     # Obtén los índices de las películas más similares
-    movie_indices = [i[0] for i in sim_scores[1:6]]  # 5 películas más similares
-    
-    # Devuelve los títulos de las películas recomendadas
-    recomendaciones = df_modelo['title'].iloc[movie_indices].tolist()
+    sim_scores = list(enumerate(sim_scores))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    # Devuelve los títulos de las películas más similares
+    movie_indices = [i[0] for i in sim_scores[1:6]]
+    recomendaciones = df['title'].iloc[movie_indices].tolist()
     
     return {"Recomendaciones": recomendaciones}
