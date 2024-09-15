@@ -289,7 +289,7 @@ async def get_director(director: str) -> dict:
     
     
     
-@app.get('/recomendacion/')
+@app.get('/recomendacion/{titulo}')
 async def recomendacion(titulo: str) ->dict:
     '''
     Se ingresa el nombre de una película EN INGLES y te recomienda las similares en una lista de 5 valores.
