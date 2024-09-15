@@ -8,13 +8,6 @@ El proyecto emplea un enfoque integral de **Data Engineering** y **Data Science*
 
 El objetivo principal es **desplegar** un sistema eficiente de recomendaciones en la plataforma **Render**, optimizado para su funcionamiento en el plan gratuito. El sistema está diseñado para procesar y analizar grandes volúmenes de datos de forma efectiva, brindando recomendaciones personalizadas y actualizadas en tiempo real.
 
-## Tecnologías y Herramientas Utilizadas
-
-- **Python**
-- **Librerías**  Scikit-learn, Pandas, Numpy, nltk, Seaborn, Pyarrow, SciPy
-- **FastAPI** para la construcción de la API
-- **Render** para el despliegue del servicio
-
 ## Tabla de Contenido
 - [Introducción](#Descripción)
 - [Instalación y Requisitos](#instalación-y-requisitos)
@@ -28,19 +21,37 @@ El objetivo principal es **desplegar** un sistema eficiente de recomendaciones e
 
 ## Instalación y Requisitos
 Para ejecutar este proyecto, asegúrate de tener instalado:
-- Python 3.8 o superior
+- Python 3.11
 - Librerías necesarias (consultar `requirements.txt`)
 
 ### Instalación
-1. Clona el repositorio:
+
+1. **Clona el repositorio**:
     ```bash
     git clone https://github.com/tu_usuario/tu_proyecto.git
     ```
-2. Navega al directorio del proyecto:
+
+2. **Navega al directorio del proyecto**:
     ```bash
     cd tu_proyecto
     ```
-3. Instala las dependencias:
+
+3. **Crea un entorno virtual** (recomendado para gestionar las dependencias del proyecto de manera aislada):
+    ```bash
+    python -m venv venv
+    ```
+
+4. **Activa el entorno virtual**:
+    - **En Windows**:
+        ```bash
+        venv\Scripts\activate
+        ```
+    - **En macOS/Linux**:
+        ```bash
+        source venv/bin/activate
+        ```
+
+5. **Instala las dependencias**:
     ```bash
     pip install -r requirements.txt
     ```
