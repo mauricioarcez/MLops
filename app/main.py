@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import pandas as pd
 import numpy as np 
 
+from scipy.sparse import csr_matrix
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
@@ -26,6 +27,7 @@ matriz = vectorizer.fit_transform(df_modelo['predictor'])
 # Reductir la dimensionalidad con SVD.
 svd = TruncatedSVD(n_components=100, random_state=42)
 matriz_reducida = svd.fit_transform(matriz)
+matriz_sparse = csr_matrix(matriz_reducida)
 
 # Diccionario para mapear meses en español a números
 meses = {
@@ -308,7 +310,7 @@ async def recomendacion(titulo: str) ->dict:
     idx = idx[0]
     
     # Calcula la similitud del coseno solo para la película seleccionada
-    sim_scores = cosine_similarity(matriz[idx], matriz).flatten()
+    sim_scores = cosine_similarity(matriz_sparse[idx], matriz_sparse, dense_output=False).flatten()
 
     # Obtén los índices de las películas más similares
     sim_scores = list(enumerate(sim_scores))
