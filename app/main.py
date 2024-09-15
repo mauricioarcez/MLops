@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 import pandas as pd
 import numpy as np 
@@ -6,6 +7,9 @@ import joblib
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
+
+# Obtener la ruta absoluta del directorio actual (donde se ejecuta main.py)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = FastAPI()
 
@@ -19,9 +23,12 @@ df_crew = pd.read_parquet('data/processed/credits/crew_desanidado.parquet')
 
 # Cargamos el Dataframe del modelo.
 df_modelo = pd.read_parquet('data/processed/modelo_dataset.parquet')
-# Cargar el vectorizador y la matriz reducida
-vectorizer = joblib.load('../data/processed/vectorizer.pkl')
-matriz_reducida = joblib.load('../data/processed/matriz_reducida.pkl')
+# Ruta hacia el directorio data/processed
+directory = os.path.join(BASE_DIR, '../data/processed/')
+# Cargar el modelo TF-IDF y la matriz reducida
+vectorizer = joblib.load(os.path.join(directory, 'vectorizer.pkl'))
+matriz_reducida = joblib.load(os.path.join(directory, 'matriz_reducida.pkl'))
+
 
 # Diccionario para mapear meses en español a números
 meses = {
@@ -306,12 +313,13 @@ async def recomendacion(titulo: str) ->dict:
     # Calcula la similitud del coseno solo para la película seleccionada
     sim_scores = cosine_similarity(matriz_reducida[idx].reshape(1, -1), matriz_reducida)
 
-    # Obtén los índices de las películas más similares
-    sim_scores = list(enumerate(sim_scores))
+    # Obtén los puntajes de similitud para la película seleccionada
+    sim_scores = list(enumerate(sim_scores[idx]))
+    # Ordena las películas basadas en la similitud
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
     # Devuelve los títulos de las películas más similares
     movie_indices = [i[0] for i in sim_scores[1:6]]
-    recomendaciones = df['title'].iloc[movie_indices].tolist()
+    recomendaciones = df_modelo['title'].iloc[movie_indices].tolist()
     
     return {"Recomendaciones": recomendaciones}
