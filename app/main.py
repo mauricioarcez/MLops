@@ -24,7 +24,7 @@ vectorizer = TfidfVectorizer(min_df=5, max_df=0.85,ngram_range=(1, 2), max_featu
 # Transformar la columna 'overview' en una matriz TF-IDF
 matriz = vectorizer.fit_transform(df_modelo['predictor'])
 # Reductir la dimensionalidad con SVD.
-svd = TruncatedSVD(n_components=300, random_state=42)
+svd = TruncatedSVD(n_components=200, random_state=42)
 matriz_reducida = svd.fit_transform(matriz)
 
 # Diccionario para mapear meses en español a números
