@@ -20,7 +20,7 @@ df_crew = pd.read_parquet('data/processed/credits/crew_desanidado.parquet')
 df_modelo = pd.read_parquet('data/processed/modelo_dataset.parquet')
 
 # Crear el vectorizador TF-IDF
-vectorizer = TfidfVectorizer(min_df=5, max_df=0.85,ngram_range=(1, 2), max_features=30000, dtype=np.float32) 
+vectorizer = TfidfVectorizer(min_df=5, max_df=0.85,ngram_range=(1, 2), max_features=20000, dtype=np.float32) 
 # Transformar la columna 'overview' en una matriz TF-IDF
 matriz = vectorizer.fit_transform(df_modelo['predictor'])
 # Reductir la dimensionalidad con SVD.
