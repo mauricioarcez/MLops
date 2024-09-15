@@ -1,1 +1,0 @@
-print('Aqui ira el modelo.')

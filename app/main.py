@@ -1,5 +1,10 @@
 from fastapi import FastAPI
 import pandas as pd
+import numpy as np 
+
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.decomposition import TruncatedSVD
 
 app = FastAPI()
 
@@ -11,6 +16,18 @@ df = pd.read_parquet('data/processed/movies/movies_dataset_etl.parquet')
 df_cast = pd.read_parquet('data/processed/credits/cast_desanidado.parquet')
 df_crew = pd.read_parquet('data/processed/credits/crew_desanidado.parquet')
 
+# Cargamos el Dataframe del modelo.
+df_modelo = pd.read_parquet('data/processed/modelo_dataset.parquet')
+
+# Crear el vectorizador TF-IDF
+vectorizer = TfidfVectorizer(min_df=3, max_df=0.85,max_features=40000, dtype=np.float32) 
+# Transformar la columna 'overview' en una matriz TF-IDF
+matriz = vectorizer.fit_transform(df_modelo['predictor'])
+# Reductir la dimensionalidad con SVD.
+svd = TruncatedSVD(n_components=600, random_state=42)
+matriz_reducida = svd.fit_transform(matriz)
+# Calcular la similitud del coseno
+cosine_sim = cosine_similarity(matriz_reducida, matriz_reducida)
 
 # Diccionario para mapear meses en español a números
 meses = {
@@ -274,7 +291,34 @@ async def get_director(director: str) -> dict:
 @app.get('/recomendacion/')
 async def recomendacion(titulo: str) ->dict:
     '''
-    Se ingresa el nombre de una película y te recomienda las similares en una lista de 5 valores.
+    Se ingresa el nombre de una película EN INGLES y te recomienda las similares en una lista de 5 valores.
+
+    Parameters:
+    -----------
+    titulo (str):
+        El titulo de la pelicula en ingles.
+        
+    Returns:
+    --------
+    Un diccionario que contiene las 5 peliculas mas similares al titulo ingresado.
     '''
+    titulo = titulo.lower()
+    # Encuentra el índice de la película
+    idx = df_modelo.index[df_modelo['title'] == titulo].tolist()
+    if not idx:
+        return {"Error": "Película no encontrada"}
+    idx = idx[0]
     
-    return {"Recomendacion": titulo}
+    # Obtén los puntajes de similitud para la película seleccionada
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    
+    # Ordena las películas basadas en la similitud
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    
+    # Obtén los índices de las películas más similares
+    movie_indices = [i[0] for i in sim_scores[1:6]]  # 5 películas más similares
+    
+    # Devuelve los títulos de las películas recomendadas
+    recomendaciones = df_modelo['title'].iloc[movie_indices].tolist()
+    
+    return {"Recomendaciones": recomendaciones}
