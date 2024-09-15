@@ -4,6 +4,7 @@ import numpy as np
 
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.decomposition import TruncatedSVD
 
 app = FastAPI()
 
@@ -18,12 +19,15 @@ df_crew = pd.read_parquet('data/processed/credits/crew_desanidado.parquet')
 # Cargamos el Dataframe del modelo.
 df_modelo = pd.read_parquet('data/processed/modelo_dataset.parquet')
 
+
 # Crear el vectorizador TF-IDF
-vectorizer = TfidfVectorizer(min_df=10, max_df=0.85,ngram_range=(1, 2), max_features=10000, dtype=np.float32) 
+vectorizer = TfidfVectorizer(min_df=4, max_df=0.85, ngram_range=(1, 2), max_features=40000, dtype=np.float32)
 # Transformar la columna 'overview' en una matriz TF-IDF
 matriz = vectorizer.fit_transform(df_modelo['predictor'])
-# Convertir a matriz esparsa.
-matriz_sparse = matriz.tocsr()
+# Reductir la dimensionalidad con SVD.
+svd = TruncatedSVD(n_components=400, random_state=42)
+matriz_reducida = svd.fit_transform(matriz)
+
 
 # Diccionario para mapear meses en español a números
 meses = {
@@ -306,7 +310,7 @@ async def recomendacion(titulo: str) ->dict:
     idx = idx[0]
     
     # Calcula la similitud del coseno solo para la película seleccionada
-    sim_scores = cosine_similarity(matriz_sparse[idx, :], matriz_sparse, dense_output=False).flatten()
+    sim_scores = cosine_similarity(matriz_reducida[idx].reshape(1, -1), matriz_reducida)
 
     # Obtén los índices de las películas más similares
     sim_scores = list(enumerate(sim_scores))
