@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import pandas as pd
 import numpy as np 
+import joblib
 
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -18,16 +19,9 @@ df_crew = pd.read_parquet('data/processed/credits/crew_desanidado.parquet')
 
 # Cargamos el Dataframe del modelo.
 df_modelo = pd.read_parquet('data/processed/modelo_dataset.parquet')
-
-
-# Crear el vectorizador TF-IDF
-vectorizer = TfidfVectorizer(min_df=4, max_df=0.85, ngram_range=(1, 2), max_features=40000, dtype=np.float32)
-# Transformar la columna 'overview' en una matriz TF-IDF
-matriz = vectorizer.fit_transform(df_modelo['predictor'])
-# Reductir la dimensionalidad con SVD.
-svd = TruncatedSVD(n_components=400, random_state=42)
-matriz_reducida = svd.fit_transform(matriz)
-
+# Cargar el vectorizador y la matriz reducida
+vectorizer = joblib.load('../data/processed/vectorizer.pkl')
+matriz_reducida = joblib.load('../data/processed/matriz_reducida.pkl')
 
 # Diccionario para mapear meses en español a números
 meses = {
