@@ -77,6 +77,7 @@ Para ejecutar este proyecto, deberas tener instalado y descargado:
 
 La estructura del proyecto es la siguiente:
 
+<<<<<<< HEAD
 - **app/**: Contiene el archivo principal de la API, donde se encuentran los decoradores y las funciones que serán consumidos por los endpoints.
   
 - **data/**: Almacena los archivos de datos utilizados en el proyecto, tanto antes como después del procesamiento.
@@ -216,6 +217,18 @@ Para desplegar el proyecto en Render, sigue estos pasos:
 
 
 
+=======
+app/: Contiene el archivo principal de la API con la lógica de recomendación.
+data/: Contiene los archivos de datos utilizados en el proyecto.
+    ├── raw/: Datos sin procesar.
+    ├── processed/: Datos procesados y utilizados en el modelo.
+notebooks/: Incluye los notebooks de Jupyter con el análisis exploratorio (EDA) y transformaciones.
+scripts/: Código fuente del proyecto, incluyendo scripts y funciones de transformación.
+    ├── convert_csv_to_parquet.py: Script para convertir archivos CSV a formato Parquet.
+    ├── etl.py: Script de ETL para transformar y limpiar datos.
+requirements.txt: Lista de dependencias y librerías necesarias para ejecutar el proyecto.
+README.md: Archivo de documentación del proyecto con instrucciones de uso y despliegue.
+>>>>>>> c737f61870dae29384f072098ede89da4f043fb2
 
 
 
