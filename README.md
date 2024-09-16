@@ -18,6 +18,7 @@ El objetivo principal es **desplegar** un sistema eficiente de recomendaciones e
 - [Despliegue](#despliegue)
 - [Resultados y Links al proyecto](#resultados-y-links-al-proyecto)
 - [Autor](#autor)
+- [Contribución y Colaboración](#contribución-y-colaboración)
 - [Licencia](#licencia)
 
 ## Instalación y Requisitos
@@ -211,8 +212,14 @@ Para desplegar el proyecto en Render, sigue estos pasos:
 - **Link a la API**: [API en Render](https://mlops-8vmz.onrender.com/docs)
 - **Link al video explicativo en YouTube**: [Video Explicativo](URL_DEL_VIDEO) (poner video)
 
-### Recomendación
+### Prueba de Recomendación
 ![Descripción de la imagen](https://drive.google.com/uc?export=view&id=1Tn8N49GXxno9dciR-6fwdYwfSb90liuW)
 
+## Autor
+Este proyecto fue desarrollado por **Mauricio Arce**, en el bootcamp de Henry. Si tienes preguntas o deseas conectar, no dudes en contactarme a través de [LinkedIn](https://www.linkedin.com/in/mauricioarcez/).
 
+## Contribución y Colaboración
+Si deseas contribuir a este proyecto o colaborar en futuras mejoras, no dudes en realizar un fork del repositorio y enviar tus pull requests. Todas las sugerencias y mejoras son bienvenidas. Asegúrate de seguir las mejores prácticas de codificación y documentación antes de hacer tu contribución.
 
+## Licencia
+Este proyecto está licenciado bajo la [Licencia MIT](./LICENSE). Si deseas más detalles sobre lo que implica esta licencia, puedes revisar el archivo de la licencia en este repositorio.
