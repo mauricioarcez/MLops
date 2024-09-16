@@ -17,7 +17,7 @@ El objetivo principal es **desplegar** un sistema eficiente de recomendaciones e
 - [Metodología](#metodología)
 - [Despliegue](#despliegue)
 - [Resultados y Links al proyecto](#resultados-y-links-al-proyecto)
-- [Contribución y Colaboración](#contribución-y-colaboración)
+- [Autor](#autor)
 - [Licencia](#licencia)
 
 ## Instalación y Requisitos
@@ -77,7 +77,6 @@ Para ejecutar este proyecto, deberas tener instalado y descargado:
 
 La estructura del proyecto es la siguiente:
 
-<<<<<<< HEAD
 - **app/**: Contiene el archivo principal de la API, donde se encuentran los decoradores y las funciones que serán consumidos por los endpoints.
   
 - **data/**: Almacena los archivos de datos utilizados en el proyecto, tanto antes como después del procesamiento.
@@ -212,23 +211,8 @@ Para desplegar el proyecto en Render, sigue estos pasos:
 - **Link a la API**: [API en Render](https://mlops-8vmz.onrender.com/docs)
 - **Link al video explicativo en YouTube**: [Video Explicativo](URL_DEL_VIDEO) (poner video)
 
-### Foto de la Recomendación
+### Recomendación
 ![Descripción de la imagen](https://drive.google.com/uc?export=view&id=1Tn8N49GXxno9dciR-6fwdYwfSb90liuW)
-
-
-
-=======
-app/: Contiene el archivo principal de la API con la lógica de recomendación.
-data/: Contiene los archivos de datos utilizados en el proyecto.
-    ├── raw/: Datos sin procesar.
-    ├── processed/: Datos procesados y utilizados en el modelo.
-notebooks/: Incluye los notebooks de Jupyter con el análisis exploratorio (EDA) y transformaciones.
-scripts/: Código fuente del proyecto, incluyendo scripts y funciones de transformación.
-    ├── convert_csv_to_parquet.py: Script para convertir archivos CSV a formato Parquet.
-    ├── etl.py: Script de ETL para transformar y limpiar datos.
-requirements.txt: Lista de dependencias y librerías necesarias para ejecutar el proyecto.
-README.md: Archivo de documentación del proyecto con instrucciones de uso y despliegue.
->>>>>>> c737f61870dae29384f072098ede89da4f043fb2
 
 
 
