@@ -210,7 +210,7 @@ Para desplegar el proyecto en Render, sigue estos pasos:
 ## Resultados y links al proyecto
 
 - **Link a la API**: [API en Render](https://mlops-8vmz.onrender.com/docs)
-- **Link al video explicativo en YouTube**: [Video Explicativo]([URL_DEL_VIDEO](https://www.youtube.com/watch?v=v1eMX6Xw5GU&ab_channel=MauricioArce))
+- **Link al video explicativo en YouTube**: [Video Explicativo](https://www.youtube.com/watch?v=v1eMX6Xw5GU&ab_channel=MauricioArce)
 
 ### Prueba de Recomendación
 ![Descripción de la imagen](https://drive.google.com/uc?export=view&id=1Tn8N49GXxno9dciR-6fwdYwfSb90liuW)
